@@ -29,9 +29,7 @@ class CountCalls():
             df = self.X[['NEIGHBORHOOD', 'ORIG_TIME_QUEUED', 'EVENT']].copy()
             df['date'] = pd.to_datetime(df['ORIG_TIME_QUEUED']).dt.date
             df.drop('ORIG_TIME_QUEUED', axis=1, inplace=True)
-            counts = df.groupby(['NEIGHBORHOOD', 'date']).count().rename(columns=
-                                                                         {'NEIGHBORHOOD':'neighborhood',
-                                                                          'EVENT':'num_calls'}).reset_index()
+            counts = df.groupby(['NEIGHBORHOOD', 'date']).count().rename(columns= {'NEIGHBORHOOD':'neighborhood','EVENT':'num_calls'}).reset_index()
             
             neighborhoods = list(counts['NEIGHBORHOOD'].unique())
             num_days = int(np.timedelta64((max(counts['date']) - min(counts['date'])), 'D')/np.timedelta64(1,'D'))+1

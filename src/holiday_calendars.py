@@ -85,3 +85,4 @@ class SeattleHolidays:
             for year in range(start_year, end_year):
                 for i in range(len(hebcal)):
                     self[hebcal['date'][i]] = hebcal['Subject'][i]
+
