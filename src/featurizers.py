@@ -210,6 +210,7 @@ class MakeModelInput():
         sports.fit(huskies_schedule)
         huskies = sports.transform()
         sports.fit(sounders_schedule)
+        sounders = sports.transform()
         us_holiday_dict = SeattleHolidays.CustomHolidays()
         us_holiday_dict._populate()
         holidayier = HolidayDummies()
