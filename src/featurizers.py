@@ -2,6 +2,9 @@ import pandas as pd
 import numpy as np
 import datetime as dt
 
+from src.holiday_calendars import SeattleHolidays
+from src.data_retrievers import DataRetrieval
+
 
 class CountCalls():
     """Counts calls by date either by city or neighborhood"""
@@ -183,6 +186,52 @@ class MakeDummies():
         return pd.get_dummies(self.X.set_index('date')).reset_index()    
         
 
+class MakeModelInput():
+    
+    def __init__(self):
+        self.X = None
+        self.y = None
+    
+    def fit(self, X, y=None):
+        # X is the calls dataframe
+        self.X = X 
+        self.y = y
+        return self
+
+    def transform(self, y=None):
+        retriever = DataRetrieval()
+        weather = retriever.get_weather_data()
+        seahawks_schedule = retriever.get_seahawks_schedule()
+        huskies_schedule = retriever.get_huskies_schedule()
+        sounders_schedule = retriever.get_sounders_schedule()
+        sports = MakeDummies()
+        sports.fit(seahawks_schedule)
+        seahawks = sports.transform()
+        sports.fit(huskies_schedule)
+        huskies = sports.transform()
+        sports.fit(sounders_schedule)
+        us_holiday_dict = SeattleHolidays.CustomHolidays()
+        us_holiday_dict._populate()
+        holidayier = HolidayDummies()
+        holidayier.fit(us_holiday_dict)
+        us_holidays = holidayier.transform()
+        jewish_holiday_dict = SeattleHolidays.JewishHolidays()
+        jewish_holiday_dict._populate()
+        holidayier.fit(jewish_holiday_dict)
+        jewish_holidays = holidayier.transform()
+        islamic_holiday_dict = SeattleHolidays.IslamicHolidays()
+        islamic_holiday_dict._populate()
+        holidayier.fit(islamic_holiday_dict)
+        islamic_holidays = holidayier.transform()
+        event_dummies = EventDummies()
+        event_dummies.fit()
+        events = event_dummies.transform()
+        joiner = JoinDataFrames(weather, us_holidays, islamic_holidays, jewish_holidays,
+                                events, seahawks, huskies, sounders)
+        joiner.fit(self.X)
+        return joiner.transform()
+
+
 class JoinDataFrames():
     
     def __init__(self, weather, us_holidays, islamic_holidays, 
@@ -203,7 +252,7 @@ class JoinDataFrames():
         self.y = y
         return self
     
-    def transform(self):
+    def transform(self, y=None):
         df1 = self.join_dfs(self.X, self.weather)
         df2 = self.join_dfs(df1, self.us_holidays)
         df3 = self.join_dfs(df2, self.islamic_holidays)
