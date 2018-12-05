@@ -21,7 +21,7 @@ class DataRetrieval():
         df['date'] = pd.to_datetime(df['DATE']).dt.date
         weather_hist = (df[['date', 'TMAX', 'PRCP', 'SNOW']]
                         .rename(columns={'PRCP':'precip', 'TMAX':'temp_max',
-                                         'PRCP':'precip', 'SNOW':'snow'}))
+                                         'SNOW':'snow'}))
         weather_hist['precip^2'] = weather_hist['precip']**2
         weather_hist['snow^2'] = weather_hist['snow']**2      
         return weather_hist
