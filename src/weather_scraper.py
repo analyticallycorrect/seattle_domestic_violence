@@ -84,6 +84,6 @@ def seattle_weather_fcst():
     forecasts_df.reset_index(inplace=True)
 
     #Rename columns
-    forecasts_df.rename(columns={'is_precipitating':'precipitation', 'index':'date' }, inplace=True)
+    forecasts_df.rename(columns={'is_precipitating':'precip_bool', 'index':'date', 'high':'temp_max',  }, inplace=True)
 
     return forecasts_df
