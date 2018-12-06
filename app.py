@@ -26,21 +26,28 @@ def settle_dv():
     return render_template('index.html')
 
 
-@app.route('/map/<query_date>', methods=['GET'])
-def map(query_date):
-    return map_seattle(query_date)
+@app.route('/query/<date_idx>', methods=['GET'])
+def query_date(date_idx):
+    date_idx = int(date_idx)
+    mapping = map_seattle(date_idx)
+    i_frame = '<iframe src="/map/' + str(date_idx) + '" width="970" height="590"> </iframe>'
+    return render_template('index.html', map=i_frame)
+    
+
+@app.route('/map/<date_idx>', methods=['GET'])
+def map(date_idx):
+    date_idx = int(date_idx)
+    return map_seattle(date_idx)
 
 def my_color_function(feature, date_idx):
     """Maps low values to green and hugh values to red."""
     try:
-        rating = ratings.iloc[date_idx][feature['properties']['name']]
+        rating = neighborhood_ratings.iloc[date_idx][feature['properties']['name']]
         return rating
     except KeyError:
-     return 0.5
+        return 0.5
 
-def map_seattle(query_date=dt.date.today().strftime("%m/%d/%Y")):
-    date_idx = (int((pd.to_datetime(neighborhood_ratings['date'])[pd.to_datetime(neighborhood_ratings['date'])==pd.to_datetime(query_date)].index).values))
-    
+def map_seattle(date_idx):
     linear = cm.linear.RdYlGn_06
     seattle_neighborhoods = folium.Map(location=[47.606, -122.3321],
                                        zoom_start=11,tiles='cartodbpositron')
