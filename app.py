@@ -26,6 +26,10 @@ def settle_dv():
     return render_template('index.html')
 
 
+@app.route('/map/<query_date>', methods=['GET'])
+def map(query_date):
+    return map_seattle(query_date)
+
 def my_color_function(feature, date_idx):
     """Maps low values to green and hugh values to red."""
     try:
