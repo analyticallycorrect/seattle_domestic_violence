@@ -30,7 +30,7 @@ def settle_dv():
 def query_date(date_idx):
     date_idx = int(date_idx)
     mapping = map_seattle(date_idx)
-    i_frame = '<iframe src="/map/' + str(date_idx) + '" width="970" height="590"> </iframe>'
+    i_frame = '<iframe src="/map/' + str(date_idx) + '" width="100%" height="595"> </iframe>'
     return render_template('index.html', map=i_frame)
     
 
@@ -49,7 +49,7 @@ def my_color_function(feature, date_idx):
 
 def map_seattle(date_idx):
     linear = cm.linear.RdYlGn_06
-    seattle_neighborhoods = folium.Map(location=[47.606, -122.3321],
+    seattle_neighborhoods = folium.Map(location=[47.61, -122.3321],
                                        zoom_start=11,tiles='cartodbpositron')
     
     GeoJson(mcpp_neighoborhoods,
