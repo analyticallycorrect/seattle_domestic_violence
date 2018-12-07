@@ -55,7 +55,7 @@ def map_seattle(date_idx):
     GeoJson(mcpp_neighoborhoods,
         style_function=lambda feature: {
         'fillColor': linear(my_color_function(feature, date_idx)),
-        'fillOpacity': 0.5,
+        'fillOpacity': 0.45,
         'color': 'gray',
         'dashArray': '5, 5'}).add_to(seattle_neighborhoods)
     
