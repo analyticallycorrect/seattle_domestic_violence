@@ -53,15 +53,6 @@
 
     neighborhood_ratings = pd.read_csv('data/neighborhood_ratings.csv')
 
-    def query_date(date):
-      """Make an ajax call to /query/label"""
-      date_idx = (int((pd.to_datetime(neighborhood_ratings['date'])[pd.to_datetime(neighborhood_ratings['date'])==pd.to_datetime(query_date)].index).values))
-      req = ajax.ajax()
-      req.open('POST', '/query/'+str(date_idx), True)
-      req.set_header('content-type','text/plain')
-      req.send()
-
-      document["date_query"].bind('click', lambda ev: query_date())
 
   </script>
   <!-- container section start -->
@@ -119,31 +110,26 @@
         <div class="row">
 
           <div class="col-lg-12">
-                  <div class="col-lg-6">
+                  <div class="col-lg-8">
         
-                      <div class="col-lg-6">
+                      <div class="col-lg-4">
                         <section class="panel">
                           <header class="panel-heading">
                           <div class="panel-body">
-                            <form class="form-horizontal " method="POST" action="/query">
-                              <!--date picker start-->
-        
-                              <div class="form-group">
-                                <label class="control-label col-sm-6"><strong>Choose Date</strong></label>
-                                <div class="col-sm-6">
-                                  <input id="dp1" type="text" value="1-1-2019" size="20" class="form-control">
-                                </div>
-                              </div>
 
-                              <!--date picker end-->
-
+                            <!--date picker start-->
+                            <form id="date_query" class="form-group">
+                              <label class="control-label"><strong>Choose Date</strong></label>
+                                <input id="dp1" data-date-format="dd-mm-yyyy" 
+                                class="form-control" type="text" name="query" autocomplete="off" >
+                                <a href='' onclick="this.href='query/'+document.getElementById('dp1').value">Submit</a>
                             </form>
+                            <!--date picker end-->
+
                           </div>
-                      </section>
+                        </section>
                       </div>
-                      <div class="col-lg-2">
-                          <button id="date_query" button type="submit" value = "Submit" class="btn btn-default btn-lg" href="" title="Bootstrap 3 themes generator">Submit</button>
-                        </div>
+
                   </div>
             </div> 
         </div>  
@@ -264,7 +250,7 @@
   <script src="/js/moment.js"></script>
   <script src="/js/bootstrap-colorpicker.js"></script>
   <script src="/js/daterangepicker.js"></script>
-  <script src="/js/bootstrap-datepicker.js"></script>
+  <script src="/js/bootstrap-er.js"></script>
 
     <!--custom script for all page-->
     <script src="/js/scripts.js"></script>
