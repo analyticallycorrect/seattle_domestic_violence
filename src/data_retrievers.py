@@ -8,12 +8,14 @@ class DataRetrieval:
     def get_calls_data(self, filepath="../data/Calls_Table_data.csv", delimiter="\t"):
         """Retrieves call for service data from csv file and converts to dataframe
 
-        Input: str
-        location of the file
-        
-        Output: dataframe
-        dataframe of calls for service data
+        Parameters
+        -----------
+        filepath : location of the file
+        Returns
+        --------
+        datafrarme
         """
+
         df = pd.read_csv(filepath, delimiter="\t", encoding="utf-16")
         df.drop_duplicates(inplace=True)
         df.reset_index(drop=True, inplace=True)
@@ -22,12 +24,14 @@ class DataRetrieval:
     def get_weather_data(self, filepath="../data/historical_weather.csv"):
         """Retrieves historical weather ata from csv file and converts to dataframe
 
-        Input: str
-        location of the file
-        
-        Output: dataframe
-        dataframe of historical weather data data
+        Parameters
+        -----------
+        filepath : location of the file
+        Returns
+        --------
+        datafrarme
         """
+
         df = pd.read_csv(filepath)
         df["date"] = pd.to_datetime(df["DATE"]).dt.date
         weather_hist = df[["date", "TMAX", "PRCP", "SNOW"]].rename(
@@ -41,12 +45,14 @@ class DataRetrieval:
         """
         Retrieves Seahawks game schedule from filepath
         
-        Input: str
-        location of the file
-        
-        Output: dataframe
-        dataframe of seahawks game information
+        Parameters
+        -----------
+        filepath : location of the file
+        Returns
+        --------
+        datafrarme
         """
+
         df_in = pd.read_csv(filepath)
         df_dropna = df_in.copy()[df_in["Opp"].notna()].reset_index(drop=True)
         df = df_dropna.copy()[df_dropna["Opp"] != "Bye Week"].reset_index(drop=True)
@@ -77,14 +83,18 @@ class DataRetrieval:
 
     def get_huskies_schedule(self, filepath="../data/huskies_schedule.csv"):
         """
+
+
         Retrieves Huskies game schedule from filepath
         
-        Input: str
-        location of the file
-        
-        Output: dataframe
-        dataframe of Huskies football game information
+        Parameters
+        -----------
+        filepath : location of the file
+        Returns
+        --------
+        datafrarme
         """
+
         df_in = pd.read_csv(filepath)
         df = df_in.copy()
         df["date"] = pd.to_datetime(df["Date"]).dt.date
@@ -101,12 +111,14 @@ class DataRetrieval:
         """
         Retrieves Sounders FC game schedule from filepath
         
-        Input: str
-        location of the file
-        
-        Output: dataframe
-        dataframe of Sounders FC game information
+        Parameters
+        -----------
+        filepath : location of the file
+        Returns
+        --------
+        datafrarme
         """
+        
         df_in = pd.read_csv(filepath)
         df = df_in.copy()
         df["date"] = pd.to_datetime(df_in["date_dd_mm_yy"]).dt.date

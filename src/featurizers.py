@@ -7,20 +7,47 @@ from src.data_retrievers import DataRetrieval
 
 
 class CountCalls:
-    """Counts calls by date either by city or neighborhood"""
+    """Counts calls by date either by city or neighborhood
+
+    Attributes
+    -----------
+    how: grouping level to count calls by. Either city or neighborhood
+    """
 
     def __init__(self, how="city"):
+        """
+        The constructor for CounterCalls class.
+
+        Parameters
+        -----------
+        how: grouping level to count calls by. Either city or neighborhood
+
+        Returns
+        --------
+        datafrarme
+        """
+
         self.how = how
         self.X = None
         self.y = None
 
     def fit(self, X, y=None):
+        """
+        Fit the calls for service dataframe to be transformed into a dataframe of call counter per day.
+
+        Parameters
+        -----------
+        X: dataframe
+        """
         self.X = X
         self.y = y
         self.how = self.how
         return self
 
     def transform(self, y=None):
+        """
+        Transforms the calls for service dataframe into a dataframe of call counter per day.
+        """
 
         if self.how == "city":
             df = self.X[["ORIG_TIME_QUEUED", "EVENT"]].copy()
@@ -73,19 +100,27 @@ class CountCalls:
 
 
 class FeaturizeCalls:
-    """Clean incoming df to fit into model"""
-
+    """Adds features to dataframe of call counts by day"""
+    
     def __init__(self):
         self.X = None
         self.y = None
 
     def fit(self, X, y=None):
+        """
+        Fit the call counts by day dataframe to be transformed into a dataframe with date features.
+
+        Parameters
+        -----------
+        X: dataframe
+        """
         self.X = X
         self.y = y
         return self
 
     def transform(self, y=None):
-        """tranform and clean incoming training or test"""
+        """
+        Transforms dataframe into a dataframe with date features."""
 
         df = self.X.copy()
         num_days = (
