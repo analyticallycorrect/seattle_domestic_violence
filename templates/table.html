@@ -1,0 +1,22 @@
+
+  <body>     
+        <table id="neighborhoods_table" class="table table-striped">
+          <thead>
+            <tr>
+              <th>Neighborhood'</th>
+              <th>Predicted Rate</th>
+              <th>Average Rate</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in rows %}
+            <tr>
+              <th>{{row['neighborhood']}}</th>
+              <td>{{row['predicted_rate']}}</td>
+              <td>{{row['average_rate']}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    
+      </body>
