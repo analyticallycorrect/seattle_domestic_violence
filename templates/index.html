@@ -62,13 +62,7 @@
 </head>
 
 <body>
-  <script type="text/python3">
-    from browser import document, ajax, alert, html
 
-    neighborhood_ratings = pd.read_csv('data/neighborhood_ratings.csv')
-
-
-  </script>
   <!-- container section start -->
   <section id="container" class="">
 
@@ -161,7 +155,7 @@
           <div class="col-lg-6 col-md-12">
               <section class="panel">
                   <header class="panel-heading">
-                      <strong>Predicted call rates for date:</strong>
+                      <strong>Projected call rates for  </strong>{{date|safe}}
                   </header>
                   <div id=“table”>{{table|safe}}</div>
                 </section>
@@ -272,23 +266,6 @@
         $('select.styled').customSelect();
       });
 
-      /* ---------- Map ---------- */
-      $(function() {
-        $('#map').vectorMap({
-          map: 'world_mill_en',
-          series: {
-            regions: [{
-              values: gdpData,
-              scale: ['#000', '#000'],
-              normalizeFunction: 'polynomial'
-            }]
-          },
-          backgroundColor: '#eef3f7',
-          onLabelShow: function(e, el, code) {
-            el.html(el.html() + ' (GDP - ' + gdpData[code] + ')');
-          }
-        });
-      });
     </script>
 
 </body>

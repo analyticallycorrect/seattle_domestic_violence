@@ -27,7 +27,7 @@ def settle_dv():
     date_idx = (int((pd.to_datetime(neighborhood_ratings['date'])[pd.to_datetime(neighborhood_ratings['date'])==pd.to_datetime(today)].index).values))
     mapping = map_seattle(date_idx)
     i_frame = '<iframe src="/map/' + str(date_idx) + '" width="100%" height="595"> </iframe>'
-    return render_template('index.html', map=i_frame, table=render_table(today))
+    return render_template('index.html', map=i_frame, table=render_table(today), date=today)
 
 
 @app.route('/<date_str>', methods=['GET'])
@@ -36,7 +36,7 @@ def query_date(date_str):
     date_idx = (int((pd.to_datetime(neighborhood_ratings['date'])[pd.to_datetime(neighborhood_ratings['date'])==pd.to_datetime(date_str)].index).values))
     mapping = map_seattle(date_idx)
     i_frame = '<iframe src="/map/' + str(date_idx) + '" width="100%" height="595"> </iframe>'
-    return render_template('index.html', map=i_frame, table=render_table(date_str))
+    return render_template('index.html', map=i_frame, table=render_table(date_str), date=date_str)
     
 
 @app.route('/map/<date_idx>', methods=['GET'])
