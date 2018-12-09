@@ -23,12 +23,17 @@ with open('data/seattle_neighborhood_shapes.geojson') as f:
 
 @app.route('/') #landing page
 def settle_dv():
-    return render_template('index.html')
+    today = dt.date.today().strftime("%m/%d/%Y")
+    date_idx = (int((pd.to_datetime(neighborhood_ratings['date'])[pd.to_datetime(neighborhood_ratings['date'])==pd.to_datetime(today)].index).values))
+    mapping = map_seattle(date_idx)
+    i_frame = '<iframe src="/map/' + str(date_idx) + '" width="100%" height="595"> </iframe>'
+    return render_template('index.html', map=i_frame)
 
 
-@app.route('/query/<date_idx>', methods=['GET'])
-def query_date(date_idx):
-    date_idx = int(date_idx)
+@app.route('/query/<month>/<day>/<year>', methods=['GET'])
+def query_date(month, day, year):
+    date_str = f"{month}/{day}/{year}"
+    date_idx = (int((pd.to_datetime(neighborhood_ratings['date'])[pd.to_datetime(neighborhood_ratings['date'])==pd.to_datetime(date_str)].index).values))
     mapping = map_seattle(date_idx)
     i_frame = '<iframe src="/map/' + str(date_idx) + '" width="100%" height="595"> </iframe>'
     return render_template('index.html', map=i_frame)
@@ -48,6 +53,7 @@ def my_color_function(feature, date_idx):
         return 0.5
 
 def map_seattle(date_idx):
+    date_idx = int(date_idx)
     linear = cm.linear.RdYlGn_06
     seattle_neighborhoods = folium.Map(location=[47.61, -122.3321],
                                        zoom_start=11,tiles='cartodbpositron')
