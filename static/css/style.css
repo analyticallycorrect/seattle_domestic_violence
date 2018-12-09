@@ -2187,7 +2187,7 @@ div[data-role="editor-toolbar"] {
 
   display: inline-block;
 
-  font-size: 14px;
+  font-size: 20px;
 
   border-right:1px solid #e6e6e6 ;
 
@@ -2211,7 +2211,7 @@ div[data-role="editor-toolbar"] {
 
   display: inline-block;
 
-  font-size: 14px;
+  font-size: 20px;
 
   position: relative;
 
@@ -2257,7 +2257,7 @@ div[data-role="editor-toolbar"] {
 
   text-decoration: none;
 
-  font-size: 14px;
+  font-size: 20px;
 
 }
 
@@ -2265,7 +2265,7 @@ div[data-role="editor-toolbar"] {
 
   text-decoration: none;
 
-  font-size: 14px;
+  font-size: 20px;
 
   text-align: center;
 
