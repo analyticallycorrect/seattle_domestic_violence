@@ -6,7 +6,25 @@ In 2017, over 54,000 domestic violence offenses were reported to the Washington 
 ## Data
 
 ### Seattle Police Department Calls for Service
+Calls for service data from January 1, 2010 to September 30, 2018, coded for domestic violence ('DV'), were downloaded as a .csv file from the Seattle Police Department "Calls for Service Dashboard" located at:  https://www.seattle.gov/police/information-and-data/calls-for-service-dashboard.
+Note that the calls for service data on the City of Seattle Open Data Portal (https://data.seattle.gov/Public-Safety/Call-Data/33kz-ixgy) don't contain the neighborhood location.  While this dataset includes a police beat location these locations do not align with neighborhood boundaries.
 
+### Weather data
+Historical daily weather data and average daily weather data for Seattle was downloaded as .csv files from the National Oceanic and Atmospheric Administration National Ceters for Environmental Information webisie located at: https://www.ncdc.noaa.gov/cdo-web/search
+
+Near-term, 15-day, weather forecast data is scraped using the weather_scraper.py file located in the src folder in this repo.  The data is scraped from weather.com at: https://weather.com/weather/tenday/l/Seattle+WA+USWA0395:1:US
+
+### Holidays
+Custom US Secular and Christian holiday calendars were made using the Holidays Python library (install by: pip install holidays). Chinese New Year holidays were added to the calendar using the Python library, calendra  using the country of Hong Kong's holidays (install by: pip install holidays). Code for recreating the calendar is located in the SeattleHolidays class of holiday_calendars.py.
+
+Islamic holiday calendars were created using the Python library, calendra  using the country of Qatar's holidays (install by: pip install holidays).  Code for recreating the calendar is located in the SeattleHolidays class of holiday_calendars.py.
+
+Jewish holiday calendar data was downloaded as .csv files from Hebcal at https://www.hebcal.com/holidays/. Code for using the calendar file can be found in the in the SeattleHolidays class of holiday_calendars.py.
+
+## Sporting Events
+Seattle Seahawks NFL football games information was scraped from Pro Football Reference at: https://www.pro-football-reference.com/years/2018/.  The data was scraped using the scrape_seahawks function in the sports_scrapers.py file located in the src folder in this repo.
+
+Washington Huskies college football game information was scraped from College 
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
