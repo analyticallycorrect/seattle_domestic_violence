@@ -31,86 +31,81 @@ Seattle Sounders FC soccer match information table was copied manually from Socc
 ### Local Events
 Dates of local events in Seattle since 2010 were compiled by searching the internet for information on the event.  Event information has been compiled for Seafair, Soltice Parade, Pride Parade and the Women's March.  The data is coded in the EventDummies class of featurizers.py.
 
+## Modeling
+To forecast daily domestic violence call rates by neighborhood the problem was broke into two models:
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+    1. Daily call rates for the city of Seattle
+    2. Daily distribution of calls by Seattle neighborhood
 
-### Prerequisites
+### City level Model - Gradient Boosted Regression Tree
 
-What things you need to install the software and how to install them
+Target Variable:
+    * Number of domestic violence calls per day for the city of Seattle derived from the calls for service data.  Calls per day were derived using the Count_Calls class of featurizers.py.
 
-```
-Give examples
-```
+Model Features:
+    *225 features including derived date features, weather, holidays, sporting events and      local events.  Features are created using FeaturizeCalls, DateDummies, HolidayDummies and  EventDummies classes in featurizers.py.
 
-### Installing
+A Gradient Boosted Regression Tree model was used to forecast the daily call rates at the city level.  The model was tuned to the following parameters and cross-validated to optimize for lowest test error:
 
-A step by step series of examples that tell you how to get a development env running
+    * Boosting stages: 752
+    * Max depth: 3
+    * Subsample size: 0.6
+    * Learning rate: 0.01
 
-Say what the step will be
+The model results in a the following mean squared errors used for cross-validation:
+    * Training error: 29.75
+    * Test error: 34.05
 
-```
-Give the example
-```
+### Neighborhood distribution Model - Random Forest
 
-And repeat
+Target Variable:
+    * The daily distribution of daily calls by Seattle neighborhood derived from the calls for service data.  The daily distribution by neighborhood is derived using...
 
-```
-until finished
-```
+Model Features:
+    *225 features including derived date features, weather, holidays, sporting events and      local events.  Features are created using...
 
-End with an example of getting some data out of the system or using it for a little demo
+A Random Forest model was used to forecast the daily distribution of calls by neighborhood.  The model was tuned to the following parameters and cross-validated to optimize for lowest test error:
 
-## Running the tests
+    * Max depth: 10
+    * Max features: auto
+    * Min sample leaves: 1
+    * Min sample splits: 5
+    * Bootstrap: True
+    * Number of trees: 10,000
 
-Explain how to run the automated tests for this system
+The model results in a the following mean squared errors used for cross-validation:
+    * Training error: 5.99 * 10^-4
+    * Test error: 6.34 * 10^-4
 
-### Break down into end to end tests
+### Combined Models
 
-Explain what these tests test and why
+Predicted daily rates by neighborhood are calculated by multiplying the city level predicted rates from the Gradient Boosted Regression Tree model by the neighborhood distributions from the Random Forest model.
 
-```
-Give an example
-```
+The combined model results in a the following mean squared errors used for cross-validation:
+    * Training error: 0.0329
+    * Test error: 0.0373
 
-### And coding style tests
+## Web application: enddvseattle.info
+An interactive dashboard for users is at enddvseattle.info. Through this dashboard users can select a date and the dashboard returns a map of the city of Seattle with a heatmap of the projected domestic violence calls for service rates for that day. Colors for the heatmap have been set to:
+    * yellow:  Projected rate for the day is the mean for the neighborhood over next 12 months.
+    * red: Projected rate for the day is greater than one standard deviation more than the       mean for the neighborhood over next 12 months.
+    * green: Projected rate for the day is less than one standard-deviation less than the mean   for the neighborhood over next 12 months.
 
-Explain what these tests test and why
+Additionally, the dashboard returns a table of all Seattle neighborhoods with the projected rate for that day and the average projected rate over the next 12 months.
 
-```
-Give an example
-```
+## Access to this Project
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-## Deployment
+1. Download this repo
+2.
+3.
 
-Add additional notes about how to deploy this on a live system
 
-## Built With
+## Future Actions
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
 
-## Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
-## Versioning
+## Author
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
-
+* **Joe Armes** - *Initial work* - [AnalyticallyCorrect](https://github.com/analyticallycorrect)
