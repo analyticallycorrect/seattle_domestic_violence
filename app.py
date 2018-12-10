@@ -13,11 +13,11 @@ from flask import Flask, request, render_template, jsonify
 app = Flask(__name__, static_url_path="")
 
 #csv files with forecast data and ratings for heatmap
-city_predictions = pd.read_csv('data/city_predictions.csv')
-neighborhood_ratings = pd.read_csv('data/neighborhood_ratings.csv')
-neighborhood_predictions = pd.read_csv('data/neighborhood_predictions.csv')
+city_predictions = pd.read_csv('dashboard_data/city_predictions.csv')
+neighborhood_ratings = pd.read_csv('dashboard_data/neighborhood_ratings.csv')
+neighborhood_predictions = pd.read_csv('dashboard_data/neighborhood_predictions.csv')
 
-with open('data/seattle_neighborhood_shapes.geojson') as f:
+with open('dashboard_data/seattle_neighborhood_shapes.geojson') as f:
     mcpp_neighoborhoods = json.load(f)
 
 
