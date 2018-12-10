@@ -1,5 +1,5 @@
 # Domestic Violence Risk in Seattle
-## Helping organizations allocate domestic violence services resourc.es
+### Helping organizations allocate domestic violence services resources
 
 In 2017, over 54,000 domestic violence offenses were reported to the Washington Association of Sheriffs and Police Chiefs (WASPC).  That equates to nearly 150 reported offenses per day making up over 50% of all crimes against persons in the state.  Rates of offenses vary widely on any given day and each community has different factors associated with changes in rates. Organizations offering victim services and educational service to reduce domestic violence struggle to know when and where services are most needed. Having the ability to forecast fluctuations in the risk of domestic violence by neighborhood dates would guide organizations in  deploying resources at the right time to individual communities. 
 
@@ -40,9 +40,11 @@ To forecast daily domestic violence call rates by neighborhood the problem was b
 ### City level Model - Gradient Boosted Regression Tree
 
 Target Variable:
+
     * Number of domestic violence calls per day for the city of Seattle derived from the calls for service data.  Calls per day were derived using the Count_Calls class of featurizers.py.
 
 Model Features:
+
     *225 features including derived date features, weather, holidays, sporting events and      local events.  Features are created using FeaturizeCalls, DateDummies, HolidayDummies and  EventDummies classes in featurizers.py.
 
 A Gradient Boosted Regression Tree model was used to forecast the daily call rates at the city level.  The model was tuned to the following parameters and cross-validated to optimize for lowest test error:
@@ -74,6 +76,7 @@ A Random Forest model was used to forecast the daily distribution of calls by ne
     * Number of trees: 10,000
 
 The model results in a the following mean squared errors used for cross-validation:
+
     * Training error: 5.99 * 10^-4
     * Test error: 6.34 * 10^-4
 
@@ -82,11 +85,13 @@ The model results in a the following mean squared errors used for cross-validati
 Predicted daily rates by neighborhood are calculated by multiplying the city level predicted rates from the Gradient Boosted Regression Tree model by the neighborhood distributions from the Random Forest model.
 
 The combined model results in a the following mean squared errors used for cross-validation:
+
     * Training error: 0.0329
     * Test error: 0.0373
 
 ## Web application: enddvseattle.info
 An interactive dashboard for users is at enddvseattle.info. Through this dashboard users can select a date and the dashboard returns a map of the city of Seattle with a heatmap of the projected domestic violence calls for service rates for that day. Colors for the heatmap have been set to:
+
     * yellow:  Projected rate for the day is the mean for the neighborhood over next 12 months.
     * red: Projected rate for the day is greater than one standard deviation more than the       mean for the neighborhood over next 12 months.
     * green: Projected rate for the day is less than one standard-deviation less than the mean   for the neighborhood over next 12 months.
