@@ -76,7 +76,7 @@ def map_seattle(date_idx):
         'fillColor': linear(my_color_function(feature, date_idx)),
         'fillOpacity': 0.45,
         'color': 'gray',
-        'dashArray': '5, 5'}).add_to(seattle_neighborhoods)
+        'dashArray': '2, 5'}).add_to(seattle_neighborhoods)
     
     mapdata = BytesIO()
     seattle_neighborhoods.save(mapdata, close_file=False)
