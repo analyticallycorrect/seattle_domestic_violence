@@ -40,8 +40,7 @@ class DataRetrieval:
         return weather_hist
 
     def get_seahawks_schedule(self, filepath="../data/seahawks_schedule.csv"):
-        """
-        Retrieves Seahawks game schedule from filepath
+        """Retrieves Seahawks game schedule from filepath
         
         Parameters
         -----------
@@ -80,8 +79,7 @@ class DataRetrieval:
         return df[["date", "seahawks_game"]].copy()
 
     def get_huskies_schedule(self, filepath="../data/huskies_schedule.csv"):
-        """
-        Retrieves Huskies game schedule from filepath
+        """Retrieves Huskies game schedule from filepath
         
         Parameters
         -----------
@@ -104,8 +102,7 @@ class DataRetrieval:
         return df[["date", "huskies_game"]].copy()
 
     def get_sounders_schedule(self, filepath="../data/sounders_schedule.csv"):
-        """
-        Retrieves Sounders FC game schedule from filepath
+        """Retrieves Sounders FC game schedule from filepath
         
         Parameters
         -----------
