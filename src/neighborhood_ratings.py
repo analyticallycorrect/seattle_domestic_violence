@@ -3,6 +3,18 @@ import numpy as np
 
 
 def neighborhood_ratings(predictions_df, features, column_names):
+    """Creates ratings by neighborhood to use for heatmap colors.
+    
+    Parameters
+    -----------
+    predictions_df: Dataframe of model prediction
+    features: Dataframe of features used in model
+    column_names: List of column names
+
+    Returns
+    --------
+    Dataframe: Dataframe of ratings by neighborhood to use for heatmap color
+    """
     neighborhood_predicted_counts = predictions_df.T
     neighborhood_predicted_counts.columns = column_names
     neighborhood_predicted_counts = neighborhood_predicted_counts.join(features["date"])
