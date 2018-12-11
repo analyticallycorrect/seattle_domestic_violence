@@ -19,6 +19,8 @@ from src.featurizers import (
     MakeDummies,
     JoinDataFrames,
     MakeModelInput,
+    FeaturizeDates,
+    AddWeatherForecast,
 )
 
 from sklearn.pipeline import Pipeline
@@ -56,6 +58,20 @@ def calls_pipe(calls_df):
         ]
     ).drop_duplicates()
     return targets, features
+
+
+def forecast_pipe(start_date, end_date, model_end):
+    forecast_pipe = Pipeline(
+        steps=[
+            ('date_featurizer', FeaturizeDates(start_date, end_date, model_end)),
+            ('date_dummifier', DateDummies()),
+            ('model_input', MakeModelInput()),
+            ('add_weather', AddWeatherForecast()),
+        ]
+    )
+    forecast_pipe.fit(None)
+    forecast_features = forecast_pipe.transform(None)
+    return forecast_features
 
 
 def baseline_model(X_train, y_train):
