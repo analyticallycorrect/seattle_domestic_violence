@@ -86,8 +86,8 @@ Predicted daily rates by neighborhood are calculated by multiplying the city lev
 
 The combined model results in a the following mean squared errors used for cross-validation:
 
-    * Training error: 0.0329
-    * Test error: 0.0373
+    Markup: * Training error: 0.0329
+            * Test error: 0.0373
 
 ## Web application: enddvseattle.info
 An interactive dashboard for users is at enddvseattle.info. Through this dashboard users can select a date and the dashboard returns a map of the city of Seattle with a heatmap of the projected domestic violence calls for service rates for that day. Colors for the heatmap have been set to:
@@ -113,4 +113,4 @@ These instructions will get you a copy of the project up and running on your loc
 
 ## Author
 
-* **Joe Armes** - *Initial work* - [AnalyticallyCorrect](https://github.com/analyticallycorrect)
+* **Joe Armes**  [AnalyticallyCorrect](https://github.com/analyticallycorrect)
