@@ -540,13 +540,15 @@ class AddWeatherForecast:
         self.X[["precip", "temp_max", "snow"]] = weather_fcst[
             ["precip", "temp_max", "snow"]
         ]
-        return (self.X.drop(columns=[
-            "dt_time",
-            "year",
-            "month",
-            "day",
-            "day_of_week",
-            "month_day",
-            "month_weekday",
-            "spec_day",
-            ]))
+        return self.X.drop(
+            columns=[
+                "dt_time",
+                "year",
+                "month",
+                "day",
+                "day_of_week",
+                "month_day",
+                "month_weekday",
+                "spec_day",
+            ]
+        )
