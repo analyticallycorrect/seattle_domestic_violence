@@ -8,8 +8,32 @@ from calendra.asia import HongKong
 
 
 class SeattleHolidays:
+    """Classes to create holiday calendars
+
+    Attributes
+    -----------
+    None
+    """
     class CustomHolidays(holidays.US):
+        """Creates calendar dictionary of US Christian and Secular holidays
+
+        Attributes
+        -----------
+        None
+        """
         def _populate(self, year=2019, start_year=2009, end_year=2030):
+            """Creates calendar dictionary of US Christian and Secular holidays
+
+            Parameters
+            -----------
+            year: Integer of the current year
+            start_year: Integer of the first year used in model
+            end_year: Integer of the last year that will be forecasted
+
+            Returns
+            --------
+            Dictionary
+            """
             # Populate the holiday list with the default US holidays
             holidays.US._populate(self, year)
             # Example: Add Ninja Turtle Day
@@ -23,7 +47,7 @@ class SeattleHolidays:
                 self[holidays.easter(year=year)] = "Easter"
                 # Add Good Friday
                 self[holidays.easter(year=year) - dt.timedelta(days=2)] = "Good Friday"
-                # Add May Da
+                # Add May Day
                 self[dt.date(year, 5, 1)] = "May Day"
                 # Add Cinco De Mayo
                 self[dt.date(year, 5, 5)] = "Cinco De Mayo"
@@ -41,7 +65,25 @@ class SeattleHolidays:
                     self[date] = label
 
     class IslamicHolidays(holidays.HolidayBase):
+        """Creates calendar dictionary of Islamic holidays
+
+        Attributes
+        -----------
+        None
+        """
         def _populate(self, year=2019, start_year=2009, end_year=2030):
+            """Creates calendar dictionary of Islamic holidays
+
+            Parameters
+            -----------
+            year: Integer of the current year
+            start_year: Integer of the first year used in model
+            end_year: Integer of the last year that will be forecasted
+
+            Returns
+            --------
+            Dictionary
+            """
             qatar_holidays = Qatar()
             # Populate the holiday list with blank base holidays
             holidays.HolidayBase._populate(self, year)
@@ -65,11 +107,37 @@ class SeattleHolidays:
                         ] = qatar_holidays.get_calendar_holidays(year)[i][1]
 
     class JewishHolidays(holidays.HolidayBase):
+        """Creates calendar dictionary of Jewish holidays
+
+        Attributes
+        -----------
+        None
+        """
         def retrieve_data(self, filepath):
+            """Retrieves .csv file containing Jewish holiday data
+
+            Parameters
+            -----------
+            filepath: file paths for file with calendar data
+
+            Returns
+            --------
+            Dataframe
+            """
             df = pd.read_csv(filepath)
             return df
 
         def get_holidays(self, paths_list):
+            """Creates dataframe of Jewish holiday data
+
+            Parameters
+            -----------
+            paths_list: file paths for files with calendar data
+
+            Returns
+            --------
+            Dataframe
+            """
             df = self.retrieve_data(paths_list[0])
             for filepath in paths_list[1:]:
                 cal = self.retrieve_data(filepath)
@@ -88,6 +156,19 @@ class SeattleHolidays:
             start_year=2009,
             end_year=2030,
         ):
+            """Creates calendar dictionary of Jewish holidays
+
+            Parameters
+            -----------
+            year: Integer of the current year
+            paths_list: file paths for files with calendar data
+            start_year: Integer of the first year used in model
+            end_year: Integer of the last year that will be forecasted
+
+            Returns
+            --------
+            Dictionary
+            """
             hebcal = self.get_holidays(paths_list)
             hebcal.reset_index(drop=True, inplace=True)
             hebcal["date"] = pd.to_datetime(hebcal["Start Date"]).dt.date
