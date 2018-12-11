@@ -81,8 +81,6 @@ class DataRetrieval:
 
     def get_huskies_schedule(self, filepath="../data/huskies_schedule.csv"):
         """
-
-
         Retrieves Huskies game schedule from filepath
         
         Parameters
