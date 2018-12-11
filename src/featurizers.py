@@ -489,7 +489,6 @@ class FeaturizeDates:
         df["day_of_week"] = df["dt_time"].dt.weekday
         df["month_day"] = df["dt_time"].dt.strftime("%m/%d")
         df["month_weekday"] = df["dt_time"].dt.strftime("%b_%a")
-        df["month"] = df["dt_time"].dt.strftime("%m/%d")
         return df
 
 
@@ -537,25 +536,17 @@ class AddWeatherForecast:
                 weather_fcst["precip"][
                     weather_fcst["dt_time"] == near_term_weather["date"][0]
                 ] = 0
-                weather_fcst["precip^2"][
-                    weather_fcst["dt_time"] == near_term_weather["date"][0]
-                ] = 0
 
-        forecast_features[["precip", "temp_max", "snow"]] = weather_fcst[
+        self.X[["precip", "temp_max", "snow"]] = weather_fcst[
             ["precip", "temp_max", "snow"]
         ]
-        forecast_features.drop(
-            columns=[
-                "dt_time",
-                "date",
-                "year",
-                "month",
-                "day",
-                "day_of_week",
-                "month_day",
-                "month_weekday",
-                "spec_day",
-            ],
-            inplace=True,
-        )
-        return forecast_features
+        return (self.X.drop(columns=[
+            "dt_time",
+            "year",
+            "month",
+            "day",
+            "day_of_week",
+            "month_day",
+            "month_weekday",
+            "spec_day",
+            ]))
