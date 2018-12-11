@@ -16,16 +16,11 @@ class CountCalls:
     """
 
     def __init__(self, how="city"):
-        """
-        The constructor for CounterCalls class.
+        """The constructor for CounterCalls class.
 
         Parameters
         -----------
         how: grouping level to count calls by. Either city or neighborhood
-
-        Returns
-        --------
-        datafrarme
         """
 
         self.how = how
@@ -33,12 +28,15 @@ class CountCalls:
         self.y = None
 
     def fit(self, X, y=None):
-        """
-        Fit the calls for service dataframe to be transformed into a dataframe of call counter per day.
+        """Fit the calls for service dataframe to be transformed into a dataframe of call counter per day.
 
         Parameters
         -----------
         X: dataframe
+
+        Returns
+        --------
+        self
         """
         self.X = X
         self.y = y
@@ -46,8 +44,15 @@ class CountCalls:
         return self
 
     def transform(self, y=None):
-        """
-        Transforms the calls for service dataframe into a dataframe of call counter per day.
+        """Transforms the calls for service dataframe into a dataframe of call counter per day.
+
+        Parameters
+        -----------
+        X: dataframe
+
+        Returns
+        --------
+        dataframe
         """
 
         if self.how == "city":
@@ -101,27 +106,51 @@ class CountCalls:
 
 
 class FeaturizeCalls:
-    """Adds features to dataframe of call counts by day"""
+    """Adds features to dataframe of call counts by day
+    
+    Attributes
+    -----------
+    None
+    """
 
     def __init__(self):
+        """The constructor for FeaturizeCalls class.
+
+        Parameters
+        -----------
+        None
+        """
+
         self.X = None
         self.y = None
 
     def fit(self, X, y=None):
-        """
-        Fit the call counts by day dataframe to be transformed into a dataframe with date features.
+        """Fit the call counts by day dataframe to be transformed into a dataframe with date features.
 
         Parameters
         -----------
         X: dataframe
+
+        Returns
+        --------
+        self
         """
         self.X = X
         self.y = y
         return self
 
     def transform(self, y=None):
+        """Transforms dataframe into a dataframe with date features.
+        
+
+        Parameters
+        -----------
+        X: dataframe
+
+        Returns
+        --------
+        dataframe
         """
-        Transforms dataframe into a dataframe with date features."""
 
         df = self.X.copy()
         num_days = (
@@ -150,17 +179,51 @@ class FeaturizeCalls:
 
 
 class DateDummies:
+    """Creates dummy variables of date features.
+    
+    Attributes
+    -----------
+    None
+    """
     def __init__(self):
+        """The constructor for DateDummies class.
+
+        Parameters
+        -----------
+        None
+        """
+
         self.X = None
         self.y = None
 
     def fit(self, X, y=None):
+        """Fit the call counts by day dataframe to be transformed into a dataframe with date dummy variables.
+
+        Parameters
+        -----------
+        X: dataframe
+
+        Returns
+        --------
+        self
+        """
         # X is the featurized calls dataframe
         self.X = X
         self.y = y
         return self
 
     def transform(self, y=None):
+        """Transforms dataframe into a dataframe with dummy variables for date features.
+        
+        Parameters
+        -----------
+        X: dataframe
+
+        Returns
+        --------
+        dataframe
+        """
+
         day_features = [
             "01/06",
             "01/14",
@@ -227,17 +290,49 @@ class DateDummies:
 
 
 class HolidayDummies:
+    """Creates dummy variables of holiday features.
+    
+    Attributes
+    -----------
+    None
+    """
     def __init__(self):
+        """The constructor for HolidayDummies class.
+
+        Parameters
+        -----------
+        None
+        """
         self.X = None
         self.y = None
 
     def fit(self, X, y=None):
+        """Fit the call counts by day dataframe to be transformed into a dataframe with holiday dummy variables.
+
+        Parameters
+        -----------
+        X: dataframe
+
+        Returns
+        --------
+        self
+        """
         # X is a dictionary of Holidays
         self.X = X
         self.y = y
         return self
 
     def transform(self, y=None):
+        """Transforms dataframe into a dataframe with dummy variables for holiday features.
+        
+        Parameters
+        -----------
+        X: dataframe
+
+        Returns
+        --------
+        dataframe
+        """
         _holidays = []
         for date in sorted(self.X.keys()):
             _holidays.append([date, self.X[date]])
@@ -246,7 +341,20 @@ class HolidayDummies:
 
 
 class EventDummies:
+    """Creates dummy variables of holiday features.
+    
+    Attributes
+    -----------
+    event_dict: Dictionary of local events in Seattle {keys= str of event names, values=string of dates for event}
+    """
+
     def __init__(self, event_dict=None):
+        """The constructor for EventDummies class.
+
+        Parameters
+        -----------
+        event_dict: Dictionary of local events in Seattle {keys= str of event names, values=string of dates for event}
+        """
         self.X = None
         self.y = None
         self.event_dict = event_dict
@@ -315,11 +423,31 @@ class EventDummies:
             self.event_dict = defualt_events
 
     def fit(self, X=None, y=None):
+        """Fit the call counts by day dataframe to be transformed into a dataframe with event dummy variables.
+
+        Parameters
+        -----------
+        X: dataframe
+
+        Returns
+        --------
+        self
+        """
         self.X = X
         self.y = y
         return self
 
     def transform(self, y=None):
+        """Transforms dataframe into a dataframe with dummy variables for event features.
+        
+        Parameters
+        -----------
+        X: dataframe
+
+        Returns
+        --------
+        dataframe
+        """
         _events = []
         for event in self.event_dict.keys():
             for day in self.event_dict[event]:
@@ -331,32 +459,95 @@ class EventDummies:
 
 
 class MakeDummies:
+    """Creates dummy variables.
+    
+    Attributes
+    -----------
+    None
+    """
     def __init__(self):
+        """The constructor for MakeDummies class.
+
+        Parameters
+        -----------
+        None
+        """
         self.X = None
         self.y = None
 
     def fit(self, X, y=None):
-        # X is a dataframe of sporting events
+        """Fit the call counts by day dataframe to be transformed into a dataframe with additional dummy variables.
+
+        Parameters
+        -----------
+        X: dataframe
+
+        Returns
+        --------
+        self
+        """
         self.X = X
         self.y = y
         return self
 
     def transform(self, y=None):
+        """Transforms dataframe into a dataframe with additional dummy.
+        
+        Parameters
+        -----------
+        X: dataframe
+
+        Returns
+        --------
+        dataframe
+        """
         return pd.get_dummies(self.X.set_index("date")).reset_index()
 
 
 class MakeModelInput:
+    """Creates data frame with all features to be used in running models.
+    
+    Attributes
+    -----------
+    None
+    """
     def __init__(self):
+        """The constructor for MakeModelInput class.
+
+        Parameters
+        -----------
+        None
+        """
         self.X = None
         self.y = None
 
     def fit(self, X, y=None):
+        """Fit the call counts by day dataframe to be transformed into a dataframe of features for input into models.
+
+        Parameters
+        -----------
+        X: dataframe
+
+        Returns
+        --------
+        self
+        """
         # X is the calls dataframe
         self.X = X
         self.y = y
         return self
 
     def transform(self, y=None):
+        """Transforms dataframe into a dataframe of features for input into models.
+        
+        Parameters
+        -----------
+        X: dataframe
+
+        Returns
+        --------
+        dataframe
+        """
         retriever = DataRetrieval()
         weather = retriever.get_weather_data()
         seahawks_schedule = retriever.get_seahawks_schedule()
@@ -400,6 +591,19 @@ class MakeModelInput:
 
 
 class JoinDataFrames:
+    """Creates data of all data.
+    
+    Attributes
+    -----------
+    weather: Dataframe of weather features
+    us_holidays: Dataframe of US Christian and Secular holiday dummy variables
+    islamic_holidays: Dataframe of Islamic holiday dummy variables
+    jewish_holidays: Dataframe of Jewish holiday dummy variables
+    events: Dataframe of dummy variables for local events
+    seahawks: Dataframe of dummy variables for Seahawks football games
+    huskies: Dataframe of dummy variables for University of Washington Huskies football games
+    sounders: Dataframe of dummy variables for Sounders FC soccer matches
+    """
     def __init__(
         self,
         weather,
@@ -411,6 +615,19 @@ class JoinDataFrames:
         huskies,
         sounders,
     ):
+        """The constructor for JoinDataFrames class.
+
+        Parameters
+        -----------
+        weather: Dataframe of weather features
+        us_holidays: Dataframe of US Christian and Secular holiday dummy variables
+        islamic_holidays: Dataframe of Islamic holiday dummy variables
+        jewish_holidays: Dataframe of Jewish holiday dummy variables
+        events: Dataframe of dummy variables for local events
+        seahawks: Dataframe of dummy variables for Seahawks football games
+        huskies: Dataframe of dummy variables for University of Washington Huskies football games
+        sounders: Dataframe of dummy variables for Sounders FC soccer matches
+        """
         self.weather = weather
         self.us_holidays = us_holidays
         self.islamic_holidays = islamic_holidays
@@ -423,11 +640,31 @@ class JoinDataFrames:
         self.y = None
 
     def fit(self, X, y=None):
+        """Fit the call counts by day dataframe to be combined with features to be used in models.
+
+        Parameters
+        -----------
+        X: dataframe
+
+        Returns
+        --------
+        self
+        """
         self.X = X
         self.y = y
         return self
 
     def transform(self, y=None):
+        """Transforms dataframe into a dataframe with combined calls for service data and features.
+        
+        Parameters
+        -----------
+        X: dataframe
+
+        Returns
+        --------
+        dataframe
+        """
         df1 = self.join_dfs(self.X, self.weather)
         df2 = self.join_dfs(df1, self.us_holidays)
         df3 = self.join_dfs(df2, self.islamic_holidays)
@@ -439,11 +676,39 @@ class JoinDataFrames:
         return df8.fillna(0)
 
     def join_dfs(self, df1, df2):
+        """Function usde by the transform method to join dataframes togeterh.
+        
+        Parameters
+        -----------
+        df1: dataframe
+        df2: dataframe
+
+        Returns
+        --------
+        dataframe
+        """
         return df1.join(df2.set_index("date"), on="date")
 
 
 class FeaturizeDates:
+    """Creates dataframe of dates and date features to be used in generating forecast.
+    
+    Attributes
+    -----------
+    start_date: string of the start date ('mm/dd/yyyy')
+    end_date: string of the end date ('mm/dd/yyyy')
+    model_end: tuple (string of the last date ('mm/dd/yyyy')used in model, integer of the last day sequence used in model)
+    """
+
     def __init__(self, start_date, end_date, model_end):
+        """The constructor for JoinDataFrames class.
+
+        Parameters
+        -----------
+        start_date: string of the start date ('mm/dd/yyyy')
+        end_date: string of the end date ('mm/dd/yyyy')
+        model_end: tuple (string of the last date ('mm/dd/yyyy')used in model, integer of the last day sequence used in model)
+        """
         self.start_date = start_date
         self.end_date = end_date
         self.model_end = model_end
@@ -451,11 +716,31 @@ class FeaturizeDates:
         self.y = None
 
     def fit(self, X=None, y=None):
+        """Fits date information to be transormed into dataframe of dates with date features.
+
+        Parameters
+        -----------
+        X: None
+
+        Returns
+        --------
+        self
+        """
         self.X = X
         self.y = y
         return self
 
     def transform(self, y=None):
+        """Transforms date information into a dataframe of dates and date features.
+        
+        Parameters
+        -----------
+        X: None
+
+        Returns
+        --------
+        dataframe
+        """
         num_days = (
             int(
                 np.timedelta64(
@@ -493,17 +778,49 @@ class FeaturizeDates:
 
 
 class AddWeatherForecast:
+    """Adds weather forecast data to dataframe of dates and date features to use in forecast.
+    
+    Attributes
+    -----------
+    None
+    """
     def __init__(self):
+        """The constructor for AddWeatherForecast class.
+
+        Parameters
+        -----------
+        None
+        """
         self.X = None
         self.y = None
 
     def fit(self, X, y=None):
+        """Fits forecast dates dataframe to be transormed into dataframe of dates with date features.
+
+        Parameters
+        -----------
+        X: dataframe
+
+        Returns
+        --------
+        self
+        """
         # X is a dataframe of dates with date features
         self.X = X
         self.y = y
         return self
 
     def transform(self, y=None):
+        """Transforms date information into a dataframe of dates with weather forecast data.
+        
+        Parameters
+        -----------
+        X: None
+
+        Returns
+        --------
+        dataframe
+        """
         forecast_dates = self.X[["dt_time", "month_day"]]
         weather_avg = pd.read_csv("../data/weather_averages.csv")
         weather_fcst = weather_avg[
