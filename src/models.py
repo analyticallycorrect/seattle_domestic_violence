@@ -29,6 +29,16 @@ from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 
 
 def calls_pipe(calls_df):
+    """Creates pipeline and dataframe for model input.
+    
+    Parameters
+    -----------
+    calls_df: dataframe of Calls for Service data
+
+    Returns
+    --------
+    tuple: dataframe of targets, dataframe of features
+    """
     calls_pipe = Pipeline(
         steps=[
             ("counter", CountCalls(how="neighborhood")),
@@ -61,6 +71,18 @@ def calls_pipe(calls_df):
 
 
 def forecast_pipe(start_date, end_date, model_end):
+    """Creates pipeline and dataframe for forecast.
+    
+    Parameters
+    -----------
+    start_date: string of the start date ('mm/dd/yyyy')
+    end_date: string of the end date ('mm/dd/yyyy')
+    model_end: tuple (string of the last date ('mm/dd/yyyy')used in model, integer of the last day sequence used in model)
+
+    Returns
+    --------
+    dataframe: dataframe of features for forecast
+    """
     forecast_pipe = Pipeline(
         steps=[
             ('date_featurizer', FeaturizeDates(start_date, end_date, model_end)),
@@ -75,12 +97,35 @@ def forecast_pipe(start_date, end_date, model_end):
 
 
 def baseline_model(X_train, y_train):
+    """Fits Linear Regression model for training.
+    
+    Parameters
+    -----------
+    X_train: Dataframe of features for training model
+    y_train: Dataframe of targets for training model
+
+
+    Returns
+    --------
+    model: Model to be tranformed with predictions
+    """
     neighborhood_model = LinearRegression()
     neighborhood_model.fit(X_train, y_train)
     return neighborhood_model
 
 
 def city_model(X_train, y_train):
+    """Fits Gradient Boosted Regression Tree model for training.
+    
+    Parameters
+    -----------
+    X_train: Dataframe of features for training model
+    y_train: Dataframe of targets for training model
+
+    Returns
+    --------
+    model: Model to be tranformed with predictions
+    """
     model_city = GradientBoostingRegressor(
         n_estimators=752, learning_rate=0.01, max_depth=3, subsample=0.6
     )
@@ -89,6 +134,17 @@ def city_model(X_train, y_train):
 
 
 def neighborhood_dist_model(X_train, y_train):
+    """Fits Random Forest model for training.
+    
+    Parameters
+    -----------
+    X_train: Dataframe of features for training model
+    y_train: Dataframe of targets for training model
+
+    Returns
+    --------
+    model: Model to be tranformed with predictions
+    """
     neighborhood_dist_train = pd.DataFrame(
         np.array(y_train.T) / np.array(y_train.sum(axis=1))
     ).T
@@ -105,4 +161,15 @@ def neighborhood_dist_model(X_train, y_train):
 
 
 def model_ensemble(city_counts, neighborhood_dist):
+    """Combines ensemble of results from city model and neighborhood distribution model
+    
+    Parameters
+    -----------
+    city_counts: Dataframe results from city model
+    y_tneighborhood_distrain: Dataframe of results from neighborhood distribution model
+
+    Returns
+    --------
+    Dataframe: Dataframe of combined results
+    """
     return city_counts * neighborhood_dist.T
