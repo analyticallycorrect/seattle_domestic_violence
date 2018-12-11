@@ -4,6 +4,7 @@ import datetime as dt
 
 from src.holiday_calendars import SeattleHolidays
 from src.data_retrievers import DataRetrieval
+from src.weather_scraper import seattle_weather_fcst
 
 
 class CountCalls:
@@ -439,3 +440,66 @@ class JoinDataFrames:
 
     def join_dfs(self, df1, df2):
         return df1.join(df2.set_index("date"), on="date")
+
+
+class FeaturizeDates:
+    def __init__(self, start_date, end_date, model_end):
+        self.start_date = start_date
+        self.end_date = end_date
+        self.model_end = model_end
+        self.X = None
+        self.y = None
+
+    def fit(self, X=None, y=None):
+        self.X = X
+        self.y = y
+        return self
+
+    def transform(self, y=None):
+        num_days = int(np.timedelta64(pd.to_datetime(self.end_date) - pd.to_datetime(self.start_date), 'D') / np.timedelta64(1,'D'))+1
+        dates = [(pd.to_datetime(self.start_date) + np.timedelta64(i,'D')) for i in range(num_days)]
+        start_seq = int((np.timedelta64(pd.to_datetime(self.start_date) - pd.to_datetime(self.model_end[0]), 'D') + self.model_end[1]) / np.timedelta64(1,'D'))
+        df = pd.DataFrame({'dt_time': dates, 'day_seq':np.arange(start_seq, start_seq+num_days)})
+        df['date'] = df['dt_time'].dt.date
+        df['year'] = df['dt_time'].dt.year
+        df['month'] = df['dt_time'].dt.month
+        df['day'] = df['dt_time'].dt.day
+        df['day_of_week'] = df['dt_time'].dt.weekday
+        df['month_day'] = df['dt_time'].dt.strftime('%m/%d')
+        df['month_weekday'] = df['dt_time'].dt.strftime('%b_%a')
+        df['month'] = df['dt_time'].dt.strftime('%m/%d')     
+        return df
+
+    
+class AddWeatherForecast:
+    def __init__(self):
+        self.X = None
+        self.y = None
+
+    def fit(self, X, y=None):
+        # X is a dataframe of dates with date features
+        self.X = X
+        self.y = y
+        return self
+
+    def transform(self, y=None):
+        forecast_dates = self.X[['dt_time', 'month_day']]
+        weather_avg = pd.read_csv('../data/weather_averages.csv')
+        weather_fcst = weather_avg[['DATE', 'DLY-TMAX-NORMAL', 'DLY-PRCP-50PCTL', 'DLY-SNOW-50PCTL']]
+        weather_fcst['DATE'] = pd.to_datetime(weather_fcst['DATE'].astype('str'), format='%Y%m%d', errors='ignore')
+        weather_fcst['month_day'] = weather_fcst['DATE'].dt.strftime('%m/%d')
+        weather_fcst = (weather_fcst[['month_day', 'DLY-PRCP-50PCTL', 'DLY-TMAX-NORMAL', 'DLY-SNOW-50PCTL']].rename(columns={'DLY-PRCP-50PCTL':'precip', 'DLY-TMAX-NORMAL':'temp_max',
+                                 'DLY-SNOW-50PCTL':'snow'}))
+        weather_fcst['snow'] = 0.0 
+        weather_fcst = forecast_dates.join(weather_fcst.set_index('month_day'), on='month_day')
+        near_term_weather = seattle_weather_fcst()
+        
+        for i in range(len(near_term_weather)):
+            weather_fcst['temp_max'][weather_fcst['dt_time'] == near_term_weather['date'][i]] = near_term_weather['temp_max'][i]
+            if near_term_weather['precip_bool'][i]==0:
+                weather_fcst['precip'][weather_fcst['dt_time'] == near_term_weather['date'][0]] = 0
+                weather_fcst['precip^2'][weather_fcst['dt_time'] == near_term_weather['date'][0]] = 0
+        
+        forecast_features[['precip', 'temp_max', 'snow']] = weather_fcst[['precip', 'temp_max', 'snow']]
+        forecast_features.drop(columns=['dt_time', 'date', 'year','month','day','day_of_week', 'month_day', 'month_weekday','spec_day'], inplace=True)
+        return forecast_features
