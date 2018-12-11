@@ -107,9 +107,9 @@ These instructions will get you a copy of the project up and running on your loc
 
 
 ## Future Actions
-
-
-
+1. Deploy website to domain
+2. Additional application features
+3. Contact potential users
 
 ## Author
 
