@@ -676,7 +676,7 @@ class JoinDataFrames:
         return df8.fillna(0)
 
     def join_dfs(self, df1, df2):
-        """Function usde by the transform method to join dataframes togeterh.
+        """Function used by the transform method to join dataframes together.
         
         Parameters
         -----------
