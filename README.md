@@ -34,51 +34,51 @@ Dates of local events in Seattle since 2010 were compiled by searching the inter
 ## Modeling
 To forecast daily domestic violence call rates by neighborhood the problem was broke into two models:
 
-    1. Daily call rates for the city of Seattle
-    2. Daily distribution of calls by Seattle neighborhood
+1. Daily call rates for the city of Seattle
+2. Daily distribution of calls by Seattle neighborhood
 
 ### City level Model - Gradient Boosted Regression Tree
 
 Target Variable:
 
-    * Number of domestic violence calls per day for the city of Seattle derived from the calls for service data.  Calls per day were derived using the Count_Calls class of featurizers.py.
+* Number of domestic violence calls per day for the city of Seattle derived from the calls for service data.  Calls per day were derived  using the Count_Calls class of featurizers.py.
 
 Model Features:
 
-    *225 features including derived date features, weather, holidays, sporting events and      local events.  Features are created using FeaturizeCalls, DateDummies, HolidayDummies and  EventDummies classes in featurizers.py.
+* 225 features including derived date features, weather, holidays, sporting events and      local events.  Features are created using FeaturizeCalls, DateDummies, HolidayDummies and  EventDummies classes in featurizers.py.
 
 A Gradient Boosted Regression Tree model was used to forecast the daily call rates at the city level.  The model was tuned to the following parameters and cross-validated to optimize for lowest test error:
 
-    * Boosting stages: 752
-    * Max depth: 3
-    * Subsample size: 0.6
-    * Learning rate: 0.01
+* Boosting stages: 752
+* Max depth: 3
+* Subsample size: 0.6
+* Learning rate: 0.01
 
 The model results in a the following mean squared errors used for cross-validation:
-    * Training error: 29.75
-    * Test error: 34.05
+* Training error: 29.75
+* Test error: 34.05
 
 ### Neighborhood distribution Model - Random Forest
 
 Target Variable:
-    * The daily distribution of daily calls by Seattle neighborhood derived from the calls for service data.  The daily distribution by neighborhood is derived using...
+* The daily distribution of daily calls by Seattle neighborhood derived from the calls for service data.  The daily distribution by neighborhood is derived using...
 
 Model Features:
-    *225 features including derived date features, weather, holidays, sporting events and      local events.  Features are created using...
+* 225 features including derived date features, weather, holidays, sporting events and      local events.  Features are created using...
 
 A Random Forest model was used to forecast the daily distribution of calls by neighborhood.  The model was tuned to the following parameters and cross-validated to optimize for lowest test error:
 
-    * Max depth: 10
-    * Max features: auto
-    * Min sample leaves: 1
-    * Min sample splits: 5
-    * Bootstrap: True
-    * Number of trees: 10,000
+* Max depth: 10
+* Max features: auto
+* Min sample leaves: 1
+* Min sample splits: 5
+* Bootstrap: True
+* Number of trees: 10,000
 
 The model results in a the following mean squared errors used for cross-validation:
 
-    * Training error: 5.99 * 10^-4
-    * Test error: 6.34 * 10^-4
+* Training error: 5.99 * 10^-4
+* Test error: 6.34 * 10^-4
 
 ### Combined Models
 
@@ -86,15 +86,15 @@ Predicted daily rates by neighborhood are calculated by multiplying the city lev
 
 The combined model results in a the following mean squared errors used for cross-validation:
 
-    Markup: * Training error: 0.0329
-            * Test error: 0.0373
+* Training error: 0.0329
+* Test error: 0.0373
 
 ## Web application: enddvseattle.info
 An interactive dashboard for users is at enddvseattle.info. Through this dashboard users can select a date and the dashboard returns a map of the city of Seattle with a heatmap of the projected domestic violence calls for service rates for that day. Colors for the heatmap have been set to:
 
-    * yellow:  Projected rate for the day is the mean for the neighborhood over next 12 months.
-    * red: Projected rate for the day is greater than one standard deviation more than the       mean for the neighborhood over next 12 months.
-    * green: Projected rate for the day is less than one standard-deviation less than the mean   for the neighborhood over next 12 months.
+* yellow:  Projected rate for the day is the mean for the neighborhood over next 12 months.
+* red: Projected rate for the day is greater than one standard deviation more than the       mean for the neighborhood over next 12 months.
+* green: Projected rate for the day is less than one standard-deviation less than the mean   for the neighborhood over next 12 months.
 
 Additionally, the dashboard returns a table of all Seattle neighborhoods with the projected rate for that day and the average projected rate over the next 12 months.
 
