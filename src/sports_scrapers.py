@@ -9,17 +9,17 @@ import random
 
 
 def scrape_huskies(start_year, end_year):
-        """Scrape UW Huskies football game data and create dataframe of game data.
-        
-        Parameters
-        -----------
-        start_year: Interger representing the first year of data to scrape
-        end_year: Interger representing the last year of data to scrape
+    """Scrape UW Huskies football game data and create dataframe of game data.
+    
+    Parameters
+    -----------
+    start_year: Interger representing the first year of data to scrape
+    end_year: Interger representing the last year of data to scrape
 
-        Returns
-        --------
-        dataframe
-        """
+    Returns
+    --------
+    dataframe
+    """
     df = pd.DataFrame()
     for year in range(start_year, end_year + 1):
 
