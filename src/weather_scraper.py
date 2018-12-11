@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import requests
 import datetime
 
+#Acknowledgement: Code in this file comes from code from Leanne Baldwin's Pass_Closure project (https://github.com/leannebaldwin/Pass_Closure)
 
 def get_raw_forecast(day):
     """
@@ -32,6 +33,7 @@ def get_raw_forecast(day):
 def get_raw_forecast_dataframe():
     """ 
     Get latest raw weather forecast dataframe for the next 15 days.
+
     Output: raw dataframe.
     """
     # Get list of forecasts for the next 15 days
@@ -52,7 +54,9 @@ def get_raw_forecast_dataframe():
 def get_hi_temperature(temp_string):
     """
     Take the hi/lo string from weather.com and convert to an integer of the high temperature.
+
     Input: string
+
     Output: int
     """
     numbers = [str(num) for num in range(0, 10)]
@@ -68,6 +72,7 @@ def get_hi_temperature(temp_string):
 def seattle_weather_fcst():
     """
     Get latest cleaned features from weather.com to be used to gain closure probabilities
+    
     Output: Clean dataframe to be used for predicting probability of closure
     """
     forecasts_df = get_raw_forecast_dataframe()
