@@ -4,7 +4,7 @@
 In 2017, over 54,000 domestic violence offenses were reported to the Washington Association of Sheriffs and Police Chiefs (WASPC).  That equates to nearly 150 reported offenses per day making up over 50% of all crimes against persons in the state.  Rates of offenses vary widely on any given day and each community has different factors associated with changes in rates. Organizations offering victim services and educational service to reduce domestic violence struggle to know when and where services are most needed. Having the ability to forecast fluctuations in the risk of domestic violence by neighborhood dates would guide organizations in  deploying resources at the right time to individual communities. 
 
 ## Presentation
-{google_docs}https://docs.google.com/presentation/d/1gSVU6NZ5pETG_tLyhhUj5JZ0R5ez40xtKSmm81UQjxU/edit?usp=sharing{/google_docs}
+{google_docs}https://drive.google.com/file/d/1h0zqaZnMsXsdqWhkXNoYCLrOtrL1DfyB/view?usp=sharing{/google_docs}
 
 ## Data
 
