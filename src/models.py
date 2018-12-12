@@ -160,16 +160,22 @@ def neighborhood_dist_model(X_train, y_train):
     return rf_dist
 
 
-def model_ensemble(city_counts, neighborhood_dist):
+def model_ensemble(city_counts, neighborhood_dist, features, targets):
     """Combines ensemble of results from city model and neighborhood distribution model
     
     Parameters
     -----------
     city_counts: Dataframe results from city model
-    y_tneighborhood_distrain: Dataframe of results from neighborhood distribution model
+    neighborhood_dist: Dataframe of results from neighborhood distribution model
+    features: Dataframe of features used in forecast
+    targets: Dataframe of targets used in model
 
     Returns
     --------
     Dataframe: Dataframe of combined results
     """
-    return city_counts * neighborhood_dist.T
+    predictions = (city_counts * neighborhood_dist.T)
+    predictions = pd.DataFrame(predictions).T
+    predictions.columns = targets.columns
+    predictions['date'] = features['date'].values
+    return predictions
