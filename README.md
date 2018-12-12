@@ -102,8 +102,9 @@ Additionally, the dashboard returns a table of all Seattle neighborhoods with th
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 1. Download this repo
-2.
-3.
+2. Create a new directory titled "data"
+3. Move files in example_data directory to data directory or create new data sets for the data directory
+4. Follow the steps outlined in the how_to_run_model.ipynb file in the [Notebooks](https://github.com/analyticallycorrect/seattle_domestic_violence/tree/master/Notebooks) directory
 
 
 ## Future Actions
