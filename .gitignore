@@ -106,5 +106,8 @@ venv.bak/
 #data
 data/
 
+#ignored Notebooks
+Notebooks_ignore/
+
 #DS Store
 .DS_Store
