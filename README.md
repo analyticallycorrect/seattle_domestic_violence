@@ -89,7 +89,7 @@ The combined model results in a the following mean squared errors used for cross
 * Training error: 0.0329
 * Test error: 0.0373
 
-## Web application: [enddvseattle.info](https://github.com/analyticallycorrect/seattle_domestic_violence/tree/master/Notebooks)
+## Web application: [enddvseattle.info](https://enddvseattle.info)
 An interactive dashboard for users is at enddvseattle.info. Through this dashboard users can select a date and the dashboard returns a map of the city of Seattle with a heatmap of the projected domestic violence calls for service rates for that day. Colors for the heatmap have been set to:
 
 * yellow:  Projected rate for the day is the mean for the neighborhood over next 12 months.
