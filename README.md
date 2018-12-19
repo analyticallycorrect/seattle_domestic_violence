@@ -1,3 +1,5 @@
+![cover image](https://github.com/analyticallycorrect/seattle_domestic_violence/tree/master/src/images/seattle_dv_cover.png)
+
 # Domestic Violence Risk in Seattle
 ### Helping organizations allocate domestic violence services resources
 
