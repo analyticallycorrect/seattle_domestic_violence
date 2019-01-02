@@ -15,7 +15,7 @@ def neighborhood_ratings(predictions_df, features, column_names):
     --------
     Dataframe: Dataframe of ratings by neighborhood to use for heatmap color
     """
-    neighborhood_predicted_counts = predictions_df.T
+    neighborhood_predicted_counts = predictions_df.drop('date', axis=1)
     neighborhood_predicted_counts.columns = column_names
     neighborhood_predicted_counts = neighborhood_predicted_counts.join(features["date"])
     neighborhood_means = neighborhood_predicted_counts.mean()
