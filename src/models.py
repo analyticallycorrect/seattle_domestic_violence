@@ -130,7 +130,7 @@ def city_model(X_train, y_train):
         n_estimators=752, learning_rate=0.01, max_depth=3, subsample=0.6
     )
     model_city.fit(X_train, y_train.sum(axis=1))
-    return city_model
+    return model_city
 
 
 def neighborhood_dist_model(X_train, y_train):
